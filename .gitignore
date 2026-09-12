@@ -1,0 +1,8 @@
+target/
+.idea/
+*.iml
+*.log
+.DS_Store
+generated-code/
+.mvn
+out/

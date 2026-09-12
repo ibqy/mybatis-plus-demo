@@ -1,0 +1,88 @@
+# MyBatis-Plus 从零到原理：一堂课教学课件
+
+> 作者：xb
+> 日期：2026-08-12
+
+> 这是一堂面向数据库持久层初学者的完整教学课。核心是使用 MyBatis-Plus Lambda 表达式快速完成单表查询，其他小节帮助理解其所需基础和简单原理。
+
+## 如何使用本课件
+
+1. 在 IDEA 中打开项目根目录。
+2. 先按[环境准备与启动](02-项目架构与启动.md#3-启动项目)运行项目。
+3. 从第 1 节开始阅读。文中的“查看代码”链接可以直接跳转到对应源码；在 GitHub/Gitee 中还会定位到具体行。
+4. 每学完一节，完成节末“动手实验”；全部小节结束后完成[综合练习](11-综合练习与答案.md)。
+5. 修改代码后执行 `./mvnw test`（Windows 使用 `.\mvnw.cmd test`）。
+
+课堂重点是 **[第 5 节：MyBatis-Plus Lambda 单表查询](05-Lambda单表查询.md)**，它把最常用写法集中在一张正式课件中。
+
+## 学习路线
+
+
+| 节次            | 主题                                                   | 学完能够回答                                                |
+| --------------- | ------------------------------------------------------ | ----------------------------------------------------------- |
+| 第 1 节         | [数据库与 SQL 基础](01-数据库与SQL基础.md)             | 表、行、列、主键、索引是什么？CRUD SQL 怎么写？             |
+| 第 2 节         | [项目架构与启动](02-项目架构与启动.md)                 | 一次 HTTP 请求如何到达 MySQL？Starter 做了什么？            |
+| 第 3 节         | [实体映射](03-实体映射.md)                             | Java 字段怎样对应数据库列？常用注解有什么作用？             |
+| 第 4 节         | [通用 CRUD](04-通用CRUD.md)                            | 为什么 Mapper 没有实现类也能查询？如何增删改查？            |
+| 第 5 节（重点） | [MyBatis-Plus Lambda 单表查询](05-Lambda单表查询.md)   | 如何用 Lambda 快速完成查一条、查多条、统计和分页？          |
+| 第 6 节         | [Service、事务与数据边界](06-Service事务与数据边界.md) | Controller、DTO、Service、Mapper 各负责什么？事务为何需要？ |
+| 第 7 节         | [高级特性](07-高级特性.md)                             | 自动填充、乐观锁、逻辑删除和防全表操作如何工作？            |
+| 第 8 节         | [自定义 XML SQL](08-自定义XML-SQL.md)                  | 通用方法不够时如何写 SQL？参数和结果怎样映射？              |
+| 第 9 节         | [MyBatis-Plus 实现原理](09-MyBatisPlus实现原理.md)     | Mapper 代理、MappedStatement、SQL 注入器和插件链是什么？    |
+| 第 10 节        | [代码生成器、测试与排错](10-代码生成器测试与排错.md)   | 如何从表生成代码？怎样验证 SQL 和定位常见问题？             |
+
+## 课件、代码与验证对照
+
+
+| 教学小节             | 主要代码示例                                                                                                                                                                                        | 可运行验证                                                         |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| 第 1 节 SQL          | [MySQL 建表脚本](../src/main/resources/schema.sql)、[SQL 练习](../src/main/resources/lesson-queries.sql)                                                                                                              | 在教学库逐条执行练习 SQL                                           |
+| 第 2 节架构          | [启动类](../src/main/java/com/xb/mybatisplus/MybatisPlusDemoApplication.java)、[应用配置](../src/main/resources/application.yml)                                                               | 启动 local Profile，调用 Demo 1                                    |
+| 第 3 节映射          | [User 实体](../src/main/java/com/xb/mybatisplus/entity/User.java)、[创建 DTO](../src/main/java/com/xb/mybatisplus/dto/CreateUserRequest.java)                                             | 新增用户并观察字段映射与校验                                       |
+| 第 4 节 CRUD         | [Controller Demo 1/2](../src/main/java/com/xb/mybatisplus/controller/UserLessonController.java)、[UserServiceImpl](../src/main/java/com/xb/mybatisplus/service/impl/UserServiceImpl.java) | 查询、新增、删除以及不存在资源 404                                 |
+| 第 5 节 Lambda 查询  | [Lambda 单表查询服务](../src/main/java/com/xb/mybatisplus/service/UserLambdaQueryService.java)、[Demo 3/4 接口](../src/main/java/com/xb/mybatisplus/controller/UserLessonController.java) | 运行查一条、查多条、统计和分页，观察 WHERE、ORDER BY、COUNT、LIMIT |
+| 第 6 节 Service/事务 | [业务接口](../src/main/java/com/xb/mybatisplus/service/UserService.java)、[事务实现](../src/main/java/com/xb/mybatisplus/service/impl/UserServiceImpl.java)                               | 在测试日志观察事务管理的 SqlSession                                |
+| 第 7 节高级特性      | [实体高级注解](../src/main/java/com/xb/mybatisplus/entity/User.java)、[插件配置](../src/main/java/com/xb/mybatisplus/config/MybatisPlusConfig.java)                                       | 集成测试验证填充、乐观锁、逻辑删除、分页                           |
+| 第 8 节 XML          | [Mapper 接口](../src/main/java/com/xb/mybatisplus/mapper/UserMapper.java)、[Mapper XML](../src/main/resources/mapper/UserMapper.xml)                                                           | 调用 active-adults 并观察`#{minAge}` 参数                          |
+| 第 9 节原理          | [Mapper 扫描](../src/main/java/com/xb/mybatisplus/MybatisPlusDemoApplication.java)、[BaseMapper](../src/main/java/com/xb/mybatisplus/mapper/UserMapper.java)                              | 结合控制台 SQL 跟踪代理调用链                                      |
+| 第 10 节生成/测试    | [代码生成器](../src/main/java/com/xb/mybatisplus/generator/MybatisPlusCodeGenerator.java)、[集成测试](../src/test/java/com/xb/mybatisplus/UserMapperIntegrationTest.java)                 | 运行生成器及`mvnw test`                                            |
+
+## 全局代码地图
+
+```text
+HTTP 请求
+   ↓
+UserLessonController       接收参数、返回 JSON
+   ↓
+UserServiceImpl            编排业务、开启事务
+   ↓
+UserMapper（动态代理）      选择通用 SQL 或 XML SQL
+   ↓
+MyBatis-Plus 拦截器链       乐观锁、防误操作、分页改写
+   ↓
+MySQL / H2                 执行最终 SQL
+```
+
+关键代码快速入口：
+
+- [启动类：Mapper 扫描](../src/main/java/com/xb/mybatisplus/MybatisPlusDemoApplication.java#L23)
+- [实体：表与字段映射](../src/main/java/com/xb/mybatisplus/entity/User.java#L24)
+- [Mapper：继承 BaseMapper](../src/main/java/com/xb/mybatisplus/mapper/UserMapper.java#L19)
+- [Service：业务和事务](../src/main/java/com/xb/mybatisplus/service/impl/UserServiceImpl.java#L23)
+- [重点：Lambda 单表快速查询](../src/main/java/com/xb/mybatisplus/service/UserLambdaQueryService.java)
+- [Controller：全部教学接口](../src/main/java/com/xb/mybatisplus/controller/UserLessonController.java#L43)
+- [插件配置](../src/main/java/com/xb/mybatisplus/config/MybatisPlusConfig.java#L21)
+- [自定义 XML SQL](../src/main/resources/mapper/UserMapper.xml#L13)
+- [代码生成器](../src/main/java/com/xb/mybatisplus/generator/MybatisPlusCodeGenerator.java#L20)
+- [集成测试](../src/test/java/com/xb/mybatisplus/UserMapperIntegrationTest.java#L35)
+
+## 学习完成标准
+
+不要以“看完”为标准。能在不复制答案的情况下完成以下任务，才算掌握入门内容：
+
+- 根据建表 SQL 写出实体类，并说明每个映射注解的原因。
+- 使用 `BaseMapper` 完成 CRUD，使用 Lambda Wrapper 完成组合查询。
+- 说出逻辑删除生成的实际 SQL，以及乐观锁解决的问题。
+- 写一个带参数的 XML 查询，并解释 `#{}` 为什么比 `${}` 安全。
+- 画出从 Controller 到数据库再返回 JSON 的执行链路。
+- 从一张新表生成代码，再把生成代码整理成可运行模块。

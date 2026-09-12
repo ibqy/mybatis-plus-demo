@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 作者：xb；日期：2026-08-12 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xb.mybatisplus.mapper.UserMapper">
+
+    <!--
+        ============================================================
+        1. namespace + id 绑定规则（文档第 2 节）
+        ============================================================
+        namespace 必须等于 Mapper 接口的全限定类名；select 的 id 必须等于接口方法名。
+        两者拼起来就是 MyBatis 内部 MappedStatement 的唯一标识。
+    -->
+
+    <!--
+        ============================================================
+        2. resultType vs resultMap（文档第 4 节）
+        ============================================================
+        resultType 指定每一行结果转换成 User。项目已开启下划线转驼峰，
+        因此 created_at 可以自动映射到 createdAt，不必在这里逐列编写 resultMap。
+
+        如果列名与属性名差异较大，或涉及联表查询，则需要使用 resultMap：
+    -->
+    <!--
+    <resultMap id="userDetailMap" type="com.xb.mybatisplus.entity.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+    -->
+
+    <!--
+        ============================================================
+        3. #{} 与 ${} 的区别（文档第 3 节）
+        ============================================================
+        - #{value}：变成 JDBC ? 参数，预处理执行，可防止 SQL 注入，应优先使用。
+        - ${value}：直接文本替换，存在 SQL 注入风险，仅适合经过严格白名单控制的
+          SQL 结构片段（如表名、排序字段），绝不能让用户输入直接拼入 ${}。
+        - 排序场景的正确做法：在 Java 中把有限的外部选项映射为固定列，
+          或在 XML 中用 <choose> 白名单（见下文示例 7）。
+    -->
+
+    <!--
+        ============================================================
+        4. 基础查询：resultType + #{param}（文档第 2-3 节）
+        ============================================================
+        教学代码显式列出字段，避免 SELECT * 在表结构变化后产生意外结果。
+        BaseMapper 会处理逻辑删除，但手写 XML SQL 必须自己增加 deleted = 0。
+    -->
+    <select id="findActiveAdults" resultType="com.xb.mybatisplus.entity.User">
+        SELECT id, name, age, email, status, created_at, updated_at, version, deleted
+        FROM demo_user
+        WHERE status = 1
+          AND deleted = 0
+          <!-- #{minAge} 会转换为 JDBC 的 ? 占位符，可避免把外部值直接拼入 SQL。 -->
+          AND age >= #{minAge}
+        ORDER BY age ASC
+    </select>
+
+    <!--
+        ============================================================
+        5. 动态 SQL：<where> + <if>（文档第 5 节）
+        ============================================================
+        <where> 会自动处理条件前缀 AND/OR，避免多条件时多出 WHERE 或 AND 关键字。
+        XML 中小于号 < 是特殊字符，必须使用 &lt; 或 CDATA 包裹。
+        注意：手写 SQL 仍需自行处理逻辑删除条件 deleted = 0。
+    -->
+    <select id="findByConditions" resultType="com.xb.mybatisplus.entity.User">
+        SELECT id, name, age, email, status, created_at, updated_at, version, deleted
+        FROM demo_user
+        <where>
+            deleted = 0
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="minAge != null">
+                AND age &gt;= #{minAge}
+            </if>
+            <if test="maxAge != null">
+                <!-- &lt; 是 XML 中小于号 < 的转义写法 -->
+                AND age &lt;= #{maxAge}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        ORDER BY id ASC
+    </select>
+
+    <!--
+        ============================================================
+        6. <foreach>：IN 集合查询（文档第 5 节）
+        ============================================================
+        collection 对应 @Param 指定的名称，item 是循环变量别名。
+        open/close 决定整体前缀和后缀，separator 决定元素之间的分隔符。
+    -->
+    <select id="findByIds" resultType="com.xb.mybatisplus.entity.User">
+        SELECT id, name, age, email, status, created_at, updated_at, version, deleted
+        FROM demo_user
+        WHERE deleted = 0
+          AND id IN
+        <foreach collection="idList" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY id ASC
+    </select>
+
+    <!--
+        ============================================================
+        7. <choose>：排序字段白名单 —— 安全使用 ${}（文档第 3、5 节）
+        ============================================================
+        ${} 存在注入风险，绝不能让用户输入直接进入 ${}。
+        此处通过 <choose> 把有限的排序选项映射为固定列名，
+        如果传入非法值就走默认的 id 排序，保证安全性。
+    -->
+    <select id="findUsersSorted" resultType="com.xb.mybatisplus.entity.User">
+        SELECT id, name, age, email, status, created_at, updated_at, version, deleted
+        FROM demo_user
+        WHERE deleted = 0
+        ORDER BY
+        <choose>
+            <when test="sortBy == 'age'">age</when>
+            <when test="sortBy == 'name'">name</when>
+            <when test="sortBy == 'created_at'">created_at</when>
+            <otherwise>id</otherwise>
+        </choose>
+        <choose>
+            <when test="sortDir == 'desc'">DESC</when>
+            <otherwise>ASC</otherwise>
+        </choose>
+    </select>
+
+</mapper>

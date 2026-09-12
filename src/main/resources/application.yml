@@ -1,0 +1,30 @@
+# 作者：xb；日期：2026-08-12
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mybatis-plus-demo
+  datasource:
+    # 可用环境变量覆盖，默认值是题目指定的教学 MySQL。
+    url: ${DB_URL:jdbc:mysql://xxx:3306/sbd?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai&createDatabaseIfNotExist=true}
+    username: ${DB_USERNAME:xxx}
+    password: ${DB_PASSWORD:xxx}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      # 首次启动自动建表并导入教学数据；脚本使用 IF NOT EXISTS，可重复执行。
+      mode: always
+      encoding: UTF-8
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  configuration:
+    # 控制台打印 SQL，教学时可观察 Wrapper 最终生成了什么语句。
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0

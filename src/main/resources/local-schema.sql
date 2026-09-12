@@ -1,0 +1,13 @@
+-- 作者：xb；日期：2026-08-12
+
+CREATE TABLE IF NOT EXISTS demo_user (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    age INT NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    status TINYINT NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP NOT NULL,
+    version INT NOT NULL DEFAULT 0,
+    deleted TINYINT NOT NULL DEFAULT 0
+);
