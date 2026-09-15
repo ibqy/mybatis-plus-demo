@@ -3,7 +3,7 @@
 > 作者：xb  
 > 日期：2026-08-12
 
-[上一节](07-高级特性.md) · [返回目录](README.md)
+[上一节](07-高级特性.md) · [返回目录](00-课程目录.md)
 
 ## 1. 什么时候离开通用 CRUD
 
@@ -70,4 +70,4 @@ XML 扫描位置配置见 [application.yml](../src/main/resources/application.ym
 
 ---
 
-[返回课件目录](README.md) · [下一节：MyBatis-Plus 简单实现原理](09-MyBatisPlus实现原理.md)
+[返回课件目录](00-课程目录.md) · [下一节：MyBatis-Plus 简单实现原理](09-MyBatisPlus实现原理.md)

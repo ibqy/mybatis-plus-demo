@@ -3,7 +3,7 @@
 > 作者：xb  
 > 日期：2026-08-12
 
-[上一节](04-通用CRUD.md) · [返回课件目录](README.md) · [查看完整代码](../src/main/java/com/xb/mybatisplus/service/UserLambdaQueryService.java#L23)
+[上一节](04-通用CRUD.md) · [返回课件目录](00-课程目录.md) · [查看完整代码](../src/main/java/com/xb/mybatisplus/service/UserLambdaQueryService.java#L23)
 
 > 本节是整堂课的重点，把Lambda 单表查询最常用的写法集中在一张课件中，方便课堂演示和课后复习。
 
@@ -272,4 +272,4 @@ curl.exe "http://localhost:8080/api/demo4/users/page?current=1&size=2&status=1"
 
 ---
 
-[返回课件目录](README.md) · [下一节：Service、事务与数据边界](06-Service事务与数据边界.md)
+[返回课件目录](00-课程目录.md) · [下一节：Service、事务与数据边界](06-Service事务与数据边界.md)
