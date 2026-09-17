@@ -7,7 +7,7 @@
 
 ## 完整教学课件
 
-请从 **[《MyBatis-Plus 从零到原理》教学课件目录](docs/README.md)** 开始。整堂课分为多个小节，覆盖数据库和 SQL 基础、Spring Boot 分层、实体映射、CRUD、Wrapper、分页、事务、高级插件、自定义 XML、MyBatis-Plus 简单实现原理、代码生成器、测试排错与综合练习；每一节都可跳转到对应代码示例。
+请从 **[《MyBatis-Plus 从零到原理》教学课件目录](docs/00-课程目录.md)** 开始。整堂课分为多个小节，覆盖数据库和 SQL 基础、Spring Boot 分层、实体映射、CRUD、Wrapper、分页、事务、高级插件、自定义 XML、MyBatis-Plus 简单实现原理、代码生成器、测试排错与综合练习；每一节都可跳转到对应代码示例。
 
 Lambda 是本项目的课堂重点，可直接学习 **[第 5 节：MyBatis-Plus Lambda 单表查询](docs/05-Lambda单表查询.md)**。
 
