@@ -77,6 +77,57 @@ curl.exe "http://localhost:8080/api/demo5/users/active-adults?minAge=18"
 
 建议一边调用，一边看控制台输出的 SQL，然后依次阅读 `entity` → `mapper` → `service` → `controller`。
 
+## 实现边界
+
+### ✅ 已实现
+
+| 功能 | 说明 | 教学价值 |
+|------|------|---------|
+| 基础 CRUD | BaseMapper 单表操作 | 理解 MyBatis-Plus 最基础能力 |
+| Lambda 查询 | LambdaQueryWrapper 条件构造 | **课件重点**，类型安全的条件组合 |
+| 分页查询 | Page 对象 + 分页插件 | 自动 COUNT + LIMIT 改写 |
+| 乐观锁 | @Version + 插件 | 并发更新的数据一致性保障 |
+| 逻辑删除 | @TableLogic | 数据软删除，可恢复 |
+| 自动填充 | MetaObjectHandler | createdAt/updatedAt 自动维护 |
+| 自定义 SQL | XML Mapper | 复杂查询仍需手写 SQL 时的方案 |
+| 批量操作 | saveBatch + LambdaUpdateWrapper | 高效批量插入/更新 |
+| 代码生成器 | MybatisPlusCodeGenerator | 快速生成 CRUD 代码 |
+
+### 🎓 教学简化
+
+| 场景 | 简化内容 | 生产环境建议 |
+|------|---------|-------------|
+| 多租户 | 未实现 | 使用 TenantLineInnerInterceptor |
+| 动态表名 | 未实现 | 使用 DynamicTableNameInnerInterceptor |
+| 读写分离 | 未实现 | 集成 ShardingSphere 或 MyBatis 路由 |
+| 缓存 | 未实现 | 集成 Redis + @Cacheable |
+| 分布式锁 | 未实现 | 使用 Redisson 或数据库锁 |
+| 审计日志 | 仅时间字段 | 完整审计需记录操作人/IP/变更内容 |
+
+### ❌ 未实现
+
+- 多表关联查询（MyBatis-Plus 专注单表）
+- 复杂报表 SQL（应使用 XML 或专门模块）
+- 数据库迁移工具（建议 Flyway/Liquibase）
+- 性能监控与慢 SQL 分析
+
+## 测试覆盖
+
+| 测试类 | 测试数 | 覆盖内容 |
+|--------|--------|---------|
+| `UserMapperIntegrationTest` | 4 | BaseMapper、XML 查询、分页、逻辑删除、Lambda 查询、乐观锁、自动填充 |
+| `ServiceLayerIntegrationTest` | 4 | 批量创建、批量更新状态、批量逻辑删除、空列表安全处理 |
+| **合计** | **8** | **全部通过** |
+
+```bash
+# 运行测试（使用 H2 内存数据库，不连接远程 MySQL）
+mvn test
+```
+
+<br>
+
+---
+
 ## 3. demo6：运行代码生成器
 
 先正常启动一次，确保表已创建；停止应用后执行：
