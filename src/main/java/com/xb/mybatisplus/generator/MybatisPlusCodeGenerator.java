@@ -39,9 +39,9 @@ public final class MybatisPlusCodeGenerator {
         // 表名优先取配置（-Dtable.names 或环境变量 TABLE_NAMES），没有配置时在控制台询问用户。
         List<String> tables = resolveTables(setting("table.names", "TABLE_NAMES", null));
 
-        // 所有生成物直接写入项目源码目录，IDEA 项目树中即可看到。
-        String javaOutput = Paths.get(System.getProperty("user.dir"), "src", "main", "java").toString();
-        String xmlOutput = Paths.get(System.getProperty("user.dir"), "src", "main", "resources", "mapper").toString();
+        // 所有生成物写入 target 目录，避免覆盖手写教学源码。
+        String javaOutput = Paths.get(System.getProperty("user.dir"), "target", "generated-code", "java").toString();
+        String xmlOutput = Paths.get(System.getProperty("user.dir"), "target", "generated-code", "mapper").toString();
 
         // FastAutoGenerator 使用 Builder 风格：每一段配置只负责一种关注点。
         FastAutoGenerator.create(url, username, password)

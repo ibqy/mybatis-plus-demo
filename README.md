@@ -133,10 +133,10 @@ mvn test
 先正常启动一次，确保表已创建；停止应用后执行：
 
 ```powershell
-.\mvnw.cmd exec:java "-Dexec.mainClass=generator.com.xb.mybatisplus.MybatisPlusCodeGenerator"
+.\mvnw.cmd exec:java "-Dexec.mainClass=com.xb.mybatisplus.generator.MybatisPlusCodeGenerator"
 ```
 
-生成结果位于 `target/generated-code`，不会覆盖教学源码。重点阅读 `MybatisPlusCodeGenerator` 中的全局配置、包配置、策略配置和模板引擎配置。
+生成结果位于 `target/generated-code`（含 java 和 mapper 子目录），不会覆盖教学源码。重点阅读 `MybatisPlusCodeGenerator` 中的全局配置、包配置、策略配置和模板引擎配置。
 
 ## 4. 安全测试
 
