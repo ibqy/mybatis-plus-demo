@@ -14,7 +14,7 @@ Lambda 是本项目的课堂重点，可直接学习 **[第 5 节：MyBatis-Plus
 ## 技术版本与环境
 
 - Java 21
-- Spring Boot 4.1.0
+- Spring Boot 4.1.1
 - MyBatis-Plus 3.5.17（Spring Boot 4 Starter）
 - Maven Wrapper 3.9.16
 - MySQL 8
