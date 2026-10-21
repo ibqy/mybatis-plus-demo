@@ -1,3 +1,17 @@
+<p align="center">
+  <a href="https://ibqy.github.io/mybatis-plus-demo/"><img src="https://img.shields.io/badge/在线课件-2F6FEB?style=flat-square" alt="在线课件"></a>
+  <img src="https://img.shields.io/badge/Java-21-2266EE?style=flat-square" alt="Java 21">
+  <img src="https://img.shields.io/badge/Spring_Boot-4.1.1-6DB33F?style=flat-square" alt="Spring Boot 4.1.1">
+  <img src="https://img.shields.io/badge/MyBatis--Plus-3.5.17-BF3A28?style=flat-square" alt="MyBatis-Plus 3.5.17">
+  <img src="https://img.shields.io/github/license/ibqy/mybatis-plus-demo?style=flat-square" alt="License">
+  <img src="https://img.shields.io/github/stars/ibqy/mybatis-plus-demo?style=flat-square" alt="Stars">
+</p>
+
+> **课程位置** 阶段 0 · 工程地基 — 第 2 站
+> [上一站 Hutool 高级用法](https://ibqy.github.io/hutool-advanced-demo/) → **MyBatis-Plus 从零到原理** → [下一站 DDD 架构](https://ibqy.github.io/ddd-arch-demo/) ｜ [完整学习路线](https://ibqy.github.io/curriculum)
+
+---
+
 # Spring Boot + MyBatis-Plus 渐进式教学项目
 
 > 作者：xb
